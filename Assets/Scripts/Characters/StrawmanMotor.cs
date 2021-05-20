@@ -72,7 +72,9 @@ public class StrawmanMotor : MonoBehaviour
 
     public void CutEnemy(Vector3 cutPos)
     {
-        var cutHit = Instantiate(cutHitObj, cutPos, Quaternion.identity);
+        float angle = Random.Range(0f, 180f);
+        Quaternion quartenion = Quaternion.Euler(0, 0, angle);
+        var cutHit = Instantiate(cutHitObj, cutPos, quartenion);
 
     }
 

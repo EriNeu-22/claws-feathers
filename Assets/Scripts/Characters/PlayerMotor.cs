@@ -137,6 +137,7 @@ public class PlayerMotor : MonoBehaviour
 
     }
 
+    private bool transformable = true;
 
     private void UpdatePrinceActions()
     {
@@ -145,16 +146,18 @@ public class PlayerMotor : MonoBehaviour
             prince.IsMoving = Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0;
             prince.HasAlreadyTransmuted = Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.LeftShift);
 
-            if(emotionTimer > 2f)
+            if (emotionTimer > 2f)
             {
                 prince.IsHuman = !Input.GetKey(KeyCode.LeftShift);
                 prince.IsRaven = Input.GetKey(KeyCode.LeftShift);
-            } else
+            }
+            else
             {
 
 
             }
-            
+
+
             prince.IsAttacking = false;
             if (timeNextAttack <= 0 && Input.GetKeyDown(KeyCode.Z))
             {
@@ -164,6 +167,7 @@ public class PlayerMotor : MonoBehaviour
             {
                 timeNextAttack -= Time.deltaTime;
             }
+
 
             UpdatePrinceCollisions();
         }
@@ -189,7 +193,7 @@ public class PlayerMotor : MonoBehaviour
         if(emotionTimer < emotionBar && prince.IsHuman)
         {
             emotionTimer += Time.deltaTime;
-            energyScale.x -= passoEmotion;
+            energyScale.x -= passoEmotion * 0.75f;
             energyBar.transform.localScale = energyScale;
         }
 
@@ -277,10 +281,10 @@ public class PlayerMotor : MonoBehaviour
                 element.GetComponent<Collider2D>().enabled = prince.IsHuman;
             }
 
-
             foreach (GameObject element in enemies)
             {
-
+                if(element != null) 
+                { 
                 if (prince.IsRaven || prince.IsAttacking)
                 {
                     element.GetComponent<SpriteRenderer>().sortingOrder = prince.rend.sortingOrder - 1;
@@ -290,6 +294,7 @@ public class PlayerMotor : MonoBehaviour
                 }
 
                 element.GetComponent<Collider2D>().isTrigger = prince.IsRaven;
+                }
             }
         }
     }
@@ -302,18 +307,6 @@ public class PlayerMotor : MonoBehaviour
         {
                 enemy.SendMessage("EnemyHit", firstHitDamage);
                 enemy.SendMessage("CutEnemy", enemy.transform.position);
-        }
-
-    }
-
-    public void UpdateEnemiesInField(GameObject enemyParam)
-    {
-        foreach (GameObject enemy in enemies)
-        {
-            if (enemy.Equals(enemyParam))
-            {
-                enemies.Remove(enemyParam);
-            }
         }
 
     }

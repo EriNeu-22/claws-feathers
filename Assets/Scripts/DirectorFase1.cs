@@ -6,14 +6,22 @@ using TMPro;
 public class DirectorFase1 : MonoBehaviour
 {
 
-    public int goal;
+    private int goal;
     public TMP_Text scoreTmpText;
     public GameObject player;
 
     private GameObject strawman;
-    private string scoreText;
     private int scoreBefore = 0;
     private int score = 0;
+
+    private const string ENEMY_TAG = "enemy";
+
+    void Start()
+    {
+
+        GameObject[] enemiesVector = GameObject.FindGameObjectsWithTag(ENEMY_TAG);
+        goal = enemiesVector.Length;
+    }
 
     void Update()
     {
@@ -21,11 +29,8 @@ public class DirectorFase1 : MonoBehaviour
         string text = GetTextScore();
         scoreTmpText.SetText(text);
 
-        if(scoreBefore > score)
-        {
-            player.SendMessage("UpdateEnemiesInField", strawman);
-        }
-
+        if(scoreBefore < score)
+            scoreBefore = score;
 
     }
 
