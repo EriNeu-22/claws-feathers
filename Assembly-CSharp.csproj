@@ -67,6 +67,10 @@
     <Compile Include="Assets\Scripts\Menu\MenuDirector.cs" />
     <Compile Include="Assets\Director.cs" />
     <Compile Include="Assets\Scripts\Hud\StatusBar.cs" />
+    <Compile Include="Assets\Scripts\Hud\Dialogue.cs" />
+    <Compile Include="Assets\Scripts\Hud\DialogueControl.cs" />
+    <Compile Include="Assets\Scripts\Characters\PlayerInteraction.cs" />
+    <Compile Include="Assets\Scripts\Characters\MentorMotor.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

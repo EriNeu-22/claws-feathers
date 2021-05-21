@@ -7,6 +7,7 @@ public class Prince
 
     #region Attributes
     private bool _isHuman;
+    private bool _isInteracting;
     private bool _isRaven;
     private bool _isMoving;
     private bool _isAlive;
@@ -39,6 +40,7 @@ public class Prince
     public bool IsMoving { get => _isMoving; set => _isMoving = value; }
     public bool IsAlive { get => _isAlive; set => _isAlive = value; }
     public bool IsAttacking { get => _isAttacking; set => _isAttacking = value; }
+    public bool IsInteracting { get => _isInteracting; set => _isInteracting = value; }
     public bool IsFlyingHigh { get => _isFlyingHigh; set => _isFlyingHigh = value; }
     public bool IsFlyingDown { get => _isFlyingDown; set => _isFlyingDown = value; }
     public Animator animator { get => _animator; set => _animator = value; }
@@ -86,6 +88,7 @@ public class PlayerMotor : MonoBehaviour
     {
         prince = new Prince()
         {
+            IsInteracting = false,
             IsHuman = true,
             IsAlive = true,
             IsMoving = false,
@@ -119,20 +122,24 @@ public class PlayerMotor : MonoBehaviour
 
     void Update()
     {
-        UpdatePrinceActions();
-        
-        if (prince.IsAlive)
+        if (!prince.IsInteracting)
         {
-            Transform();
-            Attack();
-            Move();
-            //Shot();
-            //Hit();
-            //Suffer();
-            UpdateStatusBars();
-        }
-        else {
-            //GameOver(); 
+            UpdatePrinceActions();
+
+            if (prince.IsAlive)
+            {
+                Transform();
+                Attack();
+                Move();
+                //Shot();
+                //Hit();
+                //Suffer();
+                UpdateStatusBars();
+            }
+            else
+            {
+                //GameOver(); 
+            }
         }
 
     }
@@ -311,11 +318,20 @@ public class PlayerMotor : MonoBehaviour
 
     }
 
+    public void PlayerIsTalking(bool IsTalking)
+    {
+        prince.IsInteracting = IsTalking;
+        prince.animator.SetBool("walk", false);
+        prince.animator.SetBool("raven", false);
+        prince.animator.SetBool("attack", false);
+
+    }
+
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(attackCheck.position, radiusAttack);
     }
-
 
 }
