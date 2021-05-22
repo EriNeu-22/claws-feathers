@@ -20,8 +20,13 @@ public class DialogueControl : MonoBehaviour
     private Sprite[] splashes;
     private int index;
 
+    private bool _Next = false;
     private bool IsInteracting = false;
 
+    void Start()
+    {
+        dialogueBoxPos = transform.position;
+    }
     void Update()
     {
         if (IsInteracting && Input.GetKeyDown(KeyCode.Return))
@@ -36,9 +41,8 @@ public class DialogueControl : MonoBehaviour
     {
         IsInteracting = true;
         player.SendMessage("PlayerIsTalking", IsInteracting);
-        
-        dialogueObj.SetActive(IsInteracting);
 
+        dialogueObj.SetActive(true);
         sentences = txt;
         splashes = splashesArts;
         actors = actorsName;
@@ -62,8 +66,6 @@ public class DialogueControl : MonoBehaviour
         }
     }
 
-    private bool _Next = false;
-
     public void NextSentence()
     {
         if (speechText.text == sentences[index])
@@ -76,11 +78,7 @@ public class DialogueControl : MonoBehaviour
             }
             else
             {
-                speechText.text = "";
-                index = 0;
-                IsInteracting = false;
-                player.SendMessage("PlayerIsTalking", IsInteracting);
-                dialogueObj.SetActive(IsInteracting);
+                SkipDialogue();
             }
         }
         else
@@ -90,7 +88,56 @@ public class DialogueControl : MonoBehaviour
         }
 
     }
+    public void SkipDialogue()
+    {
+        speechText.text = "";
+        index = 0;
+        IsInteracting = false;
+        player.SendMessage("PlayerIsTalking", IsInteracting);
+        dialogueObj.SetActive(IsInteracting);
+        transform.position = dialogueBoxPos;
+        Fade(IsInteracting);
 
+    }
+
+
+    private bool mFaded;
+    private float Duration = 0.4f;
+    private Vector3 dialogueBoxPos;
+
+    public void Fade(bool mFaded)
+    {
+        var canvGroup = GetComponent<CanvasGroup>();
+
+        if (mFaded)
+        {
+            StartCoroutine(DoFade(canvGroup, canvGroup.alpha, 1));
+        }
+        else
+        {
+            canvGroup.alpha = 0;
+        }
+
+    }
+    public IEnumerator DoFade(CanvasGroup canvasGroup, float start, float end)
+    {
+        float counter = 0f;
+        int velocitySpawn = 4;
+
+        while(counter < Duration)
+        {
+            if (end == 1)
+            {
+                Vector3 position = transform.position;
+                position.y += velocitySpawn;
+                transform.position = position;
+            }
+
+            counter += Time.deltaTime;
+            canvasGroup.alpha = Mathf.Lerp(start, end, counter / Duration);
+            yield return null;
+        }
+    }
 
 
 }

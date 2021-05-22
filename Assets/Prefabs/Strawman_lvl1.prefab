@@ -273,6 +273,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0569644dab21ac4181295ba5954c16f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifePoints: 50
+  lifePoints: 30
   cutHitObj: {fileID: 6655585961034594269, guid: eb740f0e78b42eb41b980aebc2a85dc0, type: 3}
   director: {fileID: 0}

@@ -22,6 +22,7 @@ public class Dialogue : MonoBehaviour
         if (startInteraction && NotInteract)
         {
             dialogueControl.Speech(profiles, speechText, actorsName);
+            dialogueControl.Fade(startInteraction);
             NotInteract = false;
 
         }
@@ -32,7 +33,7 @@ public class Dialogue : MonoBehaviour
     {
 
         startInteraction = true;
-     
+        
     }
 
 }

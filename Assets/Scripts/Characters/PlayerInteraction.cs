@@ -14,6 +14,8 @@ public class PlayerInteraction : MonoBehaviour
             collision.gameObject.SendMessage("Interact", true);
         }
 
+
+
     }
 
     public bool IsInLayerMask(GameObject obj, LayerMask layerMask)

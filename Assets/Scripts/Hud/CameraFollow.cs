@@ -31,6 +31,7 @@ public class CameraFollow : MonoBehaviour
         lastCameraPos = new Vector3(0, 0, -10);
 
     }
+
     void LateUpdate()
     {
 
@@ -50,8 +51,8 @@ public class CameraFollow : MonoBehaviour
 
             hudPosition.x = cameraPos.x;
             hudPosition.y = cameraPos.y;
-
             hud.transform.position = hudPosition;
+
 
         }
 
