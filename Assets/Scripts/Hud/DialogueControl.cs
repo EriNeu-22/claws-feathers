@@ -32,7 +32,7 @@ public class DialogueControl : MonoBehaviour
         if (IsInteracting && Input.GetKeyDown(KeyCode.Return))
         {
             NextSentence();
-            
+
         }
 
     }
@@ -124,7 +124,7 @@ public class DialogueControl : MonoBehaviour
         float counter = 0f;
         int velocitySpawn = 4;
 
-        while(counter < Duration)
+        while (counter < Duration)
         {
             if (end == 1)
             {

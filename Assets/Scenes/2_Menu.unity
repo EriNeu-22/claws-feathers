@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 472816730}
   - component: {fileID: 472816732}
   - component: {fileID: 472816731}
+  - component: {fileID: 472816733}
   m_Layer: 5
   m_Name: MenuBox
   m_TagString: Untagged
@@ -201,6 +202,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 472816729}
   m_CullTransparentMesh: 0
+--- !u!225 &472816733
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 472816729}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &684846796
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,6 +405,7 @@ MonoBehaviour:
   - {fileID: 2129781927}
   - {fileID: 1342380710}
   - {fileID: 1365624721}
+  MenuBox: {fileID: 472816729}
   SceneLoaderMenu: {fileID: 1529740541176400426, guid: 5eddcb21db606aa40b4093cab8ca4fc7, type: 3}
 --- !u!1 &861033586
 GameObject:
@@ -736,8 +750,8 @@ MonoBehaviour:
   spearRight: {fileID: 1828957231}
   spearLeft: {fileID: 861033586}
   speedRotation: 200
-  Action: 
-  director: {fileID: 0}
+  Action: 3_Options
+  director: {fileID: 800844447}
 --- !u!114 &1342380712
 MonoBehaviour:
   m_ObjectHideFlags: 0

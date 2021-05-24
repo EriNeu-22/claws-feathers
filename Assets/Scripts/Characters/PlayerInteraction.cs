@@ -9,12 +9,10 @@ public class PlayerInteraction : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (IsInLayerMask(collision.gameObject, instructions))
+        if (IsInLayerMask(collision.gameObject, instructions) && collision.gameObject.tag.Equals("trigger_tag"))
         {
             collision.gameObject.SendMessage("Interact", true);
         }
-
-
 
     }
 

@@ -12,7 +12,7 @@ public class Dialogue : MonoBehaviour
     public LayerMask Player;
 
     private bool startInteraction;
-    private bool NotInteract = true;
+    public bool NotInteract = true;
 
     public DialogueControl dialogueControl;
 
@@ -32,8 +32,8 @@ public class Dialogue : MonoBehaviour
     public void Interact(bool startInteract)
     {
 
-        startInteraction = true;
-        
+        startInteraction = startInteract;
+
     }
 
 }

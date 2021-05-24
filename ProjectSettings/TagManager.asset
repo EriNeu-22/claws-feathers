@@ -8,6 +8,7 @@ TagManager:
   - enemy
   - river
   - human_not_pass
+  - trigger_tag
   layers:
   - Default
   - TransparentFX

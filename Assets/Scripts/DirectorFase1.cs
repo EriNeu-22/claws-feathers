@@ -9,6 +9,8 @@ public class DirectorFase1 : MonoBehaviour
     private int goal;
     public TMP_Text scoreTmpText;
     public GameObject player;
+    public GameObject mentor;
+    public CanvasGroup canvasGroup;
 
     private GameObject strawman;
     private int scoreBefore = 0;
@@ -16,11 +18,15 @@ public class DirectorFase1 : MonoBehaviour
 
     private const string ENEMY_TAG = "enemy";
 
+    private bool completeFase = false;
+
     void Start()
     {
 
         GameObject[] enemiesVector = GameObject.FindGameObjectsWithTag(ENEMY_TAG);
         goal = enemiesVector.Length;
+        StartCoroutine(DoFade(canvasGroup, canvasGroup.alpha, 0));
+
     }
 
     void Update()
@@ -32,6 +38,11 @@ public class DirectorFase1 : MonoBehaviour
         if(scoreBefore < score)
             scoreBefore = score;
 
+        if(score == goal)
+        {
+            mentor.SendMessage("PlayerRocks", true);
+        }
+            
     }
 
     public void Score(GameObject strawmanObj) {
@@ -46,6 +57,21 @@ public class DirectorFase1 : MonoBehaviour
     private string GetTextScore()
     {
         return "" + score + " / " + goal;
+    }
+
+    private float Duration = 0.5f;
+
+    IEnumerator DoFade(CanvasGroup canvasGroup, float start, float end)
+    {
+        float counter = 0f;
+
+        while (counter < Duration)
+        {
+            counter += Time.deltaTime;
+            canvasGroup.alpha = Mathf.Lerp(start, end, counter / Duration);
+            yield return null;
+        }
+
     }
 
 }

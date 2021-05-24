@@ -11,6 +11,9 @@ public class MentorMotor : MonoBehaviour
     public GameObject [] interactions;
     private int index = 0;
 
+    private bool alreadyDestroyed = false;
+
+    private bool playerRocks;
 
     void Start()
     {
@@ -19,11 +22,21 @@ public class MentorMotor : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(FirstStrawmanIsDestroyed() && index == 0)
+        if(FirstStrawmanIsDestroyed() && !alreadyDestroyed && !playerRocks)
         {
             interactions[index].SendMessage("Interact", true);
             score.SetActive(true);
+            alreadyDestroyed = true;
             index++;
+        }
+
+        if (playerRocks)
+        {
+            index = 1;
+            interactions[index].SendMessage("Interact", true);
+            score.SetActive(true);
+            alreadyDestroyed = true;
+            
         }
 
 
@@ -33,5 +46,11 @@ public class MentorMotor : MonoBehaviour
     {
         return firstStrawman == null;
     }
+
+    public void PlayerRocks(bool playerWin)
+    {
+        playerRocks = playerWin;
+    }
+
 
 }
