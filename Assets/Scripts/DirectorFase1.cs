@@ -42,6 +42,11 @@ public class DirectorFase1 : MonoBehaviour
         {
             mentor.SendMessage("PlayerRocks", true);
         }
+
+        if(score == 1)
+        {
+            mentor.SendMessage("FirstStrawmanIsDestroyed", true);
+        }
             
     }
 

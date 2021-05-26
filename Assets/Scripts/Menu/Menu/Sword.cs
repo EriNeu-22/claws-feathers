@@ -95,7 +95,6 @@ public class Sword : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         IsPressed = true;
         director.GoToScene(Action);
 
-
     }
 
     public void OnPointerEnter(PointerEventData eventData)

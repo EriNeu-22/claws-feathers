@@ -286,6 +286,7 @@ public class PlayerMotor : MonoBehaviour
             foreach (GameObject element in obstacles)
             {
                 element.GetComponent<Collider2D>().enabled = prince.IsHuman;
+
             }
 
             foreach (GameObject element in enemies)
@@ -324,6 +325,12 @@ public class PlayerMotor : MonoBehaviour
         prince.animator.SetBool("walk", false);
         prince.animator.SetBool("raven", false);
         prince.animator.SetBool("attack", false);
+
+        if (prince.IsRaven)
+        {
+            prince.IsRaven = false;
+            prince.IsHuman = true;
+        }
 
     }
 

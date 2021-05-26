@@ -9,6 +9,7 @@ public class MenuDirector : MonoBehaviour
 
     public GameObject[] itens;
     public GameObject MenuBox;
+    public CanvasGroup fade;
      
     private string NextScene;
     private bool GoToNextScene = false;
@@ -17,25 +18,50 @@ public class MenuDirector : MonoBehaviour
     private CanvasScaler canvas;
     private CanvasGroup canvasGroup;
 
+    private float TimerToFadeIn = 0f;
+
     void Start()
     {
         canvas = GetComponent<CanvasScaler>();
         canvasGroup = MenuBox.GetComponent<CanvasGroup>();
-        StartCoroutine(DoFade(canvasGroup, canvasGroup.alpha, 1));
+
+        StartCoroutine(DoFade(canvasGroup, canvasGroup.alpha, 1, 0.5f));
+
+        if (PlayerPrefs.GetString("PreviousScene").Equals("1_Introduction"))
+        {
+            
+            TimerToFadeIn = 5f;
+            PlayerPrefs.SetString("PreviousScene", SceneManager.GetActiveScene().name);
+            fade.alpha = 1;
+            StartCoroutine(DoFade(fade, fade.alpha, 0, 3f));
+        } else
+        {
+            fade.alpha = 0;
+        }
+
     }
 
     void Update()
     {
-
-        if (GoToNextScene)
+        if(TimerToFadeIn >= 0)
         {
-            timerToFade -= Time.deltaTime;
-            if (timerToFade <= 0) {
-                StartGame();
-            }
+            TimerToFadeIn -= Time.deltaTime;
 
-            FreezeMenu();
+
+        } else
+        {
+            if (GoToNextScene)
+            {
+                timerToFade -= Time.deltaTime;
+                if (timerToFade <= 0)
+                {
+                    StartGame();
+                }
+
+                FreezeMenu();
+            }
         }
+        
 
     }
 
@@ -49,6 +75,7 @@ public class MenuDirector : MonoBehaviour
     #region START_GAME
     private const string START_GAME = "7_TrainingField";
     private const string OPTION_GAME = "3_Options";
+    private const string QUIT_GAME = "Quit_Game";
     public GameObject SceneLoaderMenu;
     private bool alreadyFade = false;
     private float timerToTransition = 1.4f;
@@ -65,10 +92,14 @@ public class MenuDirector : MonoBehaviour
 
         if (NextScene.Equals(OPTION_GAME))
         {
-            StartCoroutine(DoFade(canvasGroup, canvasGroup.alpha, 0));
+            StartCoroutine(DoFade(canvasGroup, canvasGroup.alpha, 0, 0.5f));
             alreadyFade = true;
         }
 
+        if (NextScene.Equals(QUIT_GAME))
+        {
+            Application.Quit();
+        }
 
         ChangeoOfScene();
 
@@ -86,9 +117,9 @@ public class MenuDirector : MonoBehaviour
         }
     }
 
-    private float Duration = 0.5f;
+
     
-    IEnumerator DoFade(CanvasGroup canvasGroup, float start, float end)
+    IEnumerator DoFade(CanvasGroup canvasGroup, float start, float end, float Duration)
     {
         float counter = 0f;
 
@@ -110,9 +141,16 @@ public class MenuDirector : MonoBehaviour
             timerToTransition -= Time.deltaTime;
             if (timerToTransition <= 0)
             {
+                PlayerPrefs.SetString("PreviousScene", SceneManager.GetActiveScene().name);
                 SceneManager.LoadScene(NextScene);
+                
             }
         }
+    }
+
+    public void GoToMoonshireWebSite()
+    {
+        Application.OpenURL("https://moonshire.herokuapp.com/");
     }
 
 }
