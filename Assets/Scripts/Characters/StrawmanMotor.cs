@@ -68,6 +68,7 @@ public class StrawmanMotor : MonoBehaviour
     {
         lifePoints -= value;
         strawman.IsAlive = lifePoints > 0;
+
     }
 
     public void CutEnemy(Vector3 cutPos)

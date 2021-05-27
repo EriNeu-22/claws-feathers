@@ -20,8 +20,14 @@ public class DirectorFase1 : MonoBehaviour
 
     private bool completeFase = false;
 
+    public AudioSource[] audios;
+    private const int AudioTrainingField = 0;
+    private const int AudioForestEnviroment = 1;
+    
     void Start()
     {
+        audios[AudioTrainingField].Play();
+        audios[AudioForestEnviroment].Play();
 
         GameObject[] enemiesVector = GameObject.FindGameObjectsWithTag(ENEMY_TAG);
         goal = enemiesVector.Length;
@@ -47,6 +53,8 @@ public class DirectorFase1 : MonoBehaviour
         {
             mentor.SendMessage("FirstStrawmanIsDestroyed", true);
         }
+
+
             
     }
 
@@ -64,7 +72,7 @@ public class DirectorFase1 : MonoBehaviour
         return "" + score + " / " + goal;
     }
 
-    private float Duration = 0.5f;
+    private float Duration = 3f;
 
     IEnumerator DoFade(CanvasGroup canvasGroup, float start, float end)
     {

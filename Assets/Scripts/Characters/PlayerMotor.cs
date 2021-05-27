@@ -76,6 +76,13 @@ public class PlayerMotor : MonoBehaviour
     private GameObject[] obstacles;
     private ArrayList enemies;
     public GameObject energyBar;
+
+    public AudioSource[] audios;
+    private const int AudioWalking = 0;
+    private const int AudioFlying = 1;
+    private const int AudioAttacking = 2;
+
+    private bool DialogueHasAlreadyOver = false;
     #endregion
 
 
@@ -125,8 +132,9 @@ public class PlayerMotor : MonoBehaviour
         if (!prince.IsInteracting)
         {
             UpdatePrinceActions();
+        }
 
-            if (prince.IsAlive)
+        if (prince.IsAlive)
             {
                 Transform();
                 Attack();
@@ -140,7 +148,7 @@ public class PlayerMotor : MonoBehaviour
             {
                 //GameOver(); 
             }
-        }
+        
 
     }
 
@@ -150,8 +158,11 @@ public class PlayerMotor : MonoBehaviour
     {
         if (prince.IsAlive)
         {
+            _movX = Input.GetAxisRaw("Horizontal");
+            _movY = Input.GetAxisRaw("Vertical");
             prince.IsMoving = Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0;
             prince.HasAlreadyTransmuted = Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.LeftShift);
+
 
             if (emotionTimer > 2f)
             {
@@ -209,41 +220,54 @@ public class PlayerMotor : MonoBehaviour
 
     private void Transform()
     {
+        
+        prince.animator.SetBool("raven", prince.IsRaven && !prince.IsHuman && !prince.IsInteracting);
+        prince.animator.SetBool("flying_high", prince.IsFlyingHigh && !prince.IsInteracting);
+        prince.animator.SetBool("flying_low", prince.IsFlyingDown && !prince.IsInteracting);
 
-        prince.animator.SetBool("raven", prince.IsRaven && !prince.IsHuman);
-        prince.animator.SetBool("flying_high", prince.IsFlyingHigh);
-        prince.animator.SetBool("flying_low", prince.IsFlyingDown);
-
+        RunAudio(AudioFlying, prince.IsRaven && !prince.IsInteracting);
     }
 
     private void Attack()
     {
 
         prince.animator.SetBool("attack", prince.IsAttacking);
+        
+            if (prince.IsAttacking)
+            {
+                if (!audios[AudioAttacking].isPlaying)
+                    audios[AudioAttacking].Play();
+            }
+
         if (prince.animator.GetBool("attack") && prince.IsAttacking && prince.IsHuman)
         {
             PlayerAttack();
-
         }
+
         
     }
 
+    private float _movX;
+    private float _movY;
+
     private void Move()
     {
-        float _movX = Input.GetAxisRaw("Horizontal");
-        float _movY = Input.GetAxisRaw("Vertical");
 
-        Vector3 moveDirection = new Vector3(_movX, _movY, 0);
-        float velocity = prince.IsRaven ? prince.FlySteps : prince.WalkSteps;
+        if (!prince.IsInteracting)
+        {
+            Vector3 moveDirection = new Vector3(_movX, _movY, 0);
+            float velocity = prince.IsRaven ? prince.FlySteps : prince.WalkSteps;
 
-        float posX = transform.position.x + moveDirection.x * Time.deltaTime * velocity;
-        float posY = transform.position.y + moveDirection.y * Time.deltaTime * velocity;
-        Vector2 move = new Vector2(posX, posY);
+            float posX = transform.position.x + moveDirection.x * Time.deltaTime * velocity;
+            float posY = transform.position.y + moveDirection.y * Time.deltaTime * velocity;
+            Vector2 move = new Vector2(posX, posY);
 
-        prince.animator.SetBool("walk", prince.IsMoving);
+            prince.body.MovePosition(move);
+            Turn(_movX, _movY);
+        }
 
-        prince.body.MovePosition(move);
-        Turn(_movX, _movY);
+        prince.animator.SetBool("walk", prince.IsMoving && !prince.IsInteracting);
+        RunAudio(AudioWalking, prince.IsHuman && prince.IsMoving && !prince.IsInteracting);
 
     }
 
@@ -281,7 +305,7 @@ public class PlayerMotor : MonoBehaviour
 
     private void UpdatePrinceCollisions()
     {
-        if (prince.HasAlreadyTransmuted)
+        if (prince.HasAlreadyTransmuted || DialogueHasAlreadyOver)
         {
             foreach (GameObject element in obstacles)
             {
@@ -304,11 +328,14 @@ public class PlayerMotor : MonoBehaviour
                 element.GetComponent<Collider2D>().isTrigger = prince.IsRaven;
                 }
             }
+            DialogueHasAlreadyOver = false;
         }
     }
 
     void PlayerAttack()
     {
+
+
         Collider2D[] enemiesAttack = Physics2D.OverlapCircleAll(attackCheck.position, radiusAttack, layerEnemy);
 
         foreach (Collider2D enemy in enemiesAttack)
@@ -326,10 +353,11 @@ public class PlayerMotor : MonoBehaviour
         prince.animator.SetBool("raven", false);
         prince.animator.SetBool("attack", false);
 
-        if (prince.IsRaven)
+        if (IsTalking && prince.IsRaven)
         {
             prince.IsRaven = false;
             prince.IsHuman = true;
+            DialogueHasAlreadyOver = true;
         }
 
     }
@@ -339,6 +367,19 @@ public class PlayerMotor : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(attackCheck.position, radiusAttack);
+    }
+
+    private void RunAudio(int id, bool turnOn)
+    {
+        if (turnOn)
+        {
+            if(!audios[id].isPlaying)
+                audios[id].Play();
+
+        } else
+        {
+            audios[id].Pause();
+        }
     }
 
 }

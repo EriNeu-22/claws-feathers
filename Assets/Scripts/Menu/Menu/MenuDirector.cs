@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class MenuDirector : MonoBehaviour
 {
+    private GameObject GameManager;
 
     public GameObject[] itens;
     public GameObject MenuBox;
@@ -20,36 +21,45 @@ public class MenuDirector : MonoBehaviour
 
     private float TimerToFadeIn = 0f;
 
+    private AudioSource AudioMenuTheme;
+
     void Start()
     {
+        GameManager = GameObject.FindWithTag("GameManager");
+
         canvas = GetComponent<CanvasScaler>();
         canvasGroup = MenuBox.GetComponent<CanvasGroup>();
 
         StartCoroutine(DoFade(canvasGroup, canvasGroup.alpha, 1, 0.5f));
 
+
         if (PlayerPrefs.GetString("PreviousScene").Equals("1_Introduction"))
         {
-            
-            TimerToFadeIn = 5f;
+            TimerToFadeIn = 2f;
             PlayerPrefs.SetString("PreviousScene", SceneManager.GetActiveScene().name);
             fade.alpha = 1;
-            StartCoroutine(DoFade(fade, fade.alpha, 0, 3f));
+            StartCoroutine(DoFade(fade, fade.alpha, 0, TimerToFadeIn));
         } else
         {
             fade.alpha = 0;
         }
 
+
     }
 
     void Update()
     {
-        if(TimerToFadeIn >= 0)
-        {
-            TimerToFadeIn -= Time.deltaTime;
 
+        if(TimerToFadeIn > 0)
+        {
+           TimerToFadeIn -= Time.deltaTime;
 
         } else
         {
+            fade.gameObject.SetActive(false);
+        }
+
+
             if (GoToNextScene)
             {
                 timerToFade -= Time.deltaTime;
@@ -60,8 +70,6 @@ public class MenuDirector : MonoBehaviour
 
                 FreezeMenu();
             }
-        }
-        
 
     }
 
@@ -88,10 +96,12 @@ public class MenuDirector : MonoBehaviour
             var sceneLoaderMenu = Instantiate(SceneLoaderMenu, new Vector3(canvas.referenceResolution.x / 2, canvas.referenceResolution.y / 2, 0), Quaternion.identity);
             sceneLoaderMenu.transform.SetParent(transform);
             alreadyFade = true;
+            GameManager.SendMessage("StopMenuSong", true);
         }
 
         if (NextScene.Equals(OPTION_GAME))
         {
+
             StartCoroutine(DoFade(canvasGroup, canvasGroup.alpha, 0, 0.5f));
             alreadyFade = true;
         }

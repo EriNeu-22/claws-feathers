@@ -25,10 +25,27 @@ public class Sword : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private bool Continue = true;
 
 
+
+    public AudioClip AudioClipSelected;
+    private AudioSource AudioSelected;
+
+    public AudioClip AudioClipPressed;
+    private AudioSource AudioPressed;
+    
+
     void Start()
     {
         posLeftIni = spearLeft.transform.position;
         posRightIni = spearRight.transform.position;
+
+        AudioSelected = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
+        AudioSelected.clip = AudioClipSelected;
+        AudioSelected.volume = 0.01f;
+
+        AudioPressed = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
+        AudioPressed.clip = AudioClipPressed;
+        AudioPressed.volume = 0.06f;
+
     }
 
     void Update()
@@ -93,6 +110,7 @@ public class Sword : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void Selected()
     {
         IsPressed = true;
+        StartCoroutine(ExampleCoroutine());
         director.GoToScene(Action);
 
     }
@@ -100,6 +118,7 @@ public class Sword : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void OnPointerEnter(PointerEventData eventData)
     {
         Highlighted = true;
+        AudioSelected.Play();
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -107,5 +126,17 @@ public class Sword : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if(!IsPressed)
             Highlighted = false;
     }
+
+    IEnumerator ExampleCoroutine()
+    {
+        //Print the time of when the function is first called.
+        Debug.Log("Started Coroutine at timestamp : " + Time.time);
+        AudioPressed.Play();
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSeconds(0.6f);
+        //After we have waited 5 seconds print the time again.
+        Debug.Log("Finished Coroutine at timestamp : " + Time.time);
+    }
+
 
 }

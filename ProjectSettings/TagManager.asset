@@ -9,6 +9,7 @@ TagManager:
   - river
   - human_not_pass
   - trigger_tag
+  - GameManager
   layers:
   - Default
   - TransparentFX
