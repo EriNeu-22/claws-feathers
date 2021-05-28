@@ -39,7 +39,7 @@ public class StrawmanMotor : MonoBehaviour
     private Strawman strawman;
 
     private bool dead = false;
-
+    public AudioSource BreakWoodSound;
     
     void Start()
     {
@@ -68,7 +68,7 @@ public class StrawmanMotor : MonoBehaviour
     {
         lifePoints -= value;
         strawman.IsAlive = lifePoints > 0;
-
+        BreakWoodSound.Play();
     }
 
     public void CutEnemy(Vector3 cutPos)
