@@ -23,6 +23,8 @@ public class MenuDirector : MonoBehaviour
 
     private AudioSource AudioMenuTheme;
 
+    public GameObject AudioMenuThemeObject;
+
     void Start()
     {
         GameManager = GameObject.FindWithTag("GameManager");
@@ -32,8 +34,14 @@ public class MenuDirector : MonoBehaviour
 
         StartCoroutine(DoFade(canvasGroup, canvasGroup.alpha, 1, 0.5f));
 
+        if (PlayerPrefs.GetString("PreviousScene").Equals("7_TrainingField"))
+        {
+            AudioMenuTheme = AudioMenuThemeObject.GetComponent<AudioSource>();
+            Debug.Log(PlayerPrefs.GetString("PreviousScene"));
+            AudioMenuTheme.Play();
+        }
 
-        if (PlayerPrefs.GetString("PreviousScene").Equals("1_Introduction"))
+        if (PlayerPrefs.GetString("PreviousScene").Equals("1_Introduction") || PlayerPrefs.GetString("PreviousScene").Equals("7_TrainingField"))
         {
             TimerToFadeIn = 2f;
             PlayerPrefs.SetString("PreviousScene", SceneManager.GetActiveScene().name);
@@ -43,7 +51,6 @@ public class MenuDirector : MonoBehaviour
         {
             fade.alpha = 0;
         }
-
 
     }
 

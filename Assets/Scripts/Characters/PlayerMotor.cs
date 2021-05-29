@@ -81,7 +81,7 @@ public class PlayerMotor : MonoBehaviour
     private const int AudioWalking = 0;
     private const int AudioFlying = 1;
     private const int AudioAttacking = 2;
-
+    private bool GameIsPaused = false;
     private bool DialogueHasAlreadyOver = false;
     #endregion
 
@@ -129,7 +129,7 @@ public class PlayerMotor : MonoBehaviour
 
     void Update()
     {
-        if (!prince.IsInteracting)
+        if (!prince.IsInteracting && !GameIsPaused)
         {
             UpdatePrinceActions();
         }
@@ -253,7 +253,7 @@ public class PlayerMotor : MonoBehaviour
     private void Move()
     {
 
-        if (!prince.IsInteracting)
+        if (!prince.IsInteracting && !GameIsPaused)
         {
             Vector3 moveDirection = new Vector3(_movX, _movY, 0);
             float velocity = prince.IsRaven ? prince.FlySteps : prince.WalkSteps;
@@ -379,6 +379,16 @@ public class PlayerMotor : MonoBehaviour
         } else
         {
             audios[id].Pause();
+        }
+    }
+
+    public void PauseGame(bool value)
+    {
+        GameIsPaused = value;
+
+        if (GameIsPaused)
+        {
+            DialogueHasAlreadyOver = true;
         }
     }
 

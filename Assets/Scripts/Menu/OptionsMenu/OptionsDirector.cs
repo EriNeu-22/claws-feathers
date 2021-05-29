@@ -10,6 +10,7 @@ public class OptionsDirector : MonoBehaviour
     public int VolumeSound;
 
     public GameObject OptionBox;
+    
     private string Action;
     private bool actionTrigger;
 
@@ -17,36 +18,30 @@ public class OptionsDirector : MonoBehaviour
     private const string BACK_TO_MENU = "Back_to_Menu";
 
     private CanvasGroup canvasgroup;
-    
+
+    public string MenuType;
+
+    private bool PauseActive = false;
+
 
     void Start()
     {
-        canvasgroup = OptionBox.GetComponent<CanvasGroup>();
-        StartCoroutine(DoFade(canvasgroup, canvasgroup.alpha, 1));
-        actionTrigger = false;
+        if (MenuType.Equals("MenuOptions"))
+        {
+            canvasgroup = OptionBox.GetComponent<CanvasGroup>();
+            StartCoroutine(DoFade(canvasgroup, canvasgroup.alpha, 1));
+            actionTrigger = false;
+        }
+
     }
 
     void Update()
     {
-
-        if (actionTrigger)
+        if (MenuType.Equals("MenuOptions"))
         {
-
-            if (Action.Equals(BACK_TO_MENU))
-            {
-                StartCoroutine(DoFade(canvasgroup, canvasgroup.alpha, 0));
-
-                timerToFade -= Time.deltaTime;
-                if (timerToFade <= 0)
-                {
-                    timerToFade = Duration;
-                    SceneManager.LoadScene(MENU_SCENE);
-                }
-            }
-
-
-
+            DoMenuOptions();
         }
+
     }
 
     private float timerToFade = 1f;
@@ -70,6 +65,26 @@ public class OptionsDirector : MonoBehaviour
     {
         Action = _action;
         actionTrigger = true;
+    }
+
+    private void DoMenuOptions()
+    {
+        if (actionTrigger)
+        {
+
+            if (Action.Equals(BACK_TO_MENU))
+            {
+                StartCoroutine(DoFade(canvasgroup, canvasgroup.alpha, 0));
+
+                timerToFade -= Time.deltaTime;
+                if (timerToFade <= 0)
+                {
+                    timerToFade = Duration;
+                    SceneManager.LoadScene(MENU_SCENE);
+                }
+            }
+
+        }
     }
 
 }

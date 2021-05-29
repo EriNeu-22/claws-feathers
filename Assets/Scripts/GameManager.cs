@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 
-    public GameObject AudioMenu;
     private float TimerToStartMenuSong = 6f;
     private float TimerCounterToFadeMenuSong = 0f;
     private bool AlreadyStartSong = false;
@@ -54,7 +53,7 @@ public class GameManager : MonoBehaviour
 
     public void StopMenuSong(bool stop)
     {
-        _AudioMenuTheme.Stop();
+        _AudioMenuTheme.Pause();
 
     }
 
