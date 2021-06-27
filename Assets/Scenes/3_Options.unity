@@ -324,12 +324,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -481,6 +481,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 389511336}
     m_Modifications:
+    - target: {fileID: 1542370943485524034, guid: 8f6d1041f2e0dc64786ec9d1302f84b3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 189f6cfeaa67f13458a42da7a8f717c5, type: 3}
     - target: {fileID: 1542370943789015353, guid: 8f6d1041f2e0dc64786ec9d1302f84b3, type: 3}
       propertyPath: director
       value: 
@@ -569,6 +573,10 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1542370943872643603, guid: 8f6d1041f2e0dc64786ec9d1302f84b3, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1542370943872643607, guid: 8f6d1041f2e0dc64786ec9d1302f84b3, type: 3}
       propertyPath: m_Name
       value: OptionBox
@@ -577,10 +585,38 @@ PrefabInstance:
       propertyPath: director
       value: 
       objectReference: {fileID: 657610059}
+    - target: {fileID: 1542370943958603348, guid: 8f6d1041f2e0dc64786ec9d1302f84b3, type: 3}
+      propertyPath: images.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 189f6cfeaa67f13458a42da7a8f717c5, type: 3}
+    - target: {fileID: 1542370943958603348, guid: 8f6d1041f2e0dc64786ec9d1302f84b3, type: 3}
+      propertyPath: images.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 0793df21af7bb4d4bb193e3dce224f25, type: 3}
+    - target: {fileID: 1542370943958603348, guid: 8f6d1041f2e0dc64786ec9d1302f84b3, type: 3}
+      propertyPath: images.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: ee5465f523bef4442933282b5c8c49ee, type: 3}
+    - target: {fileID: 1542370943958603348, guid: 8f6d1041f2e0dc64786ec9d1302f84b3, type: 3}
+      propertyPath: images.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: 5940058b15631c748aefaaabf8b2a6a5, type: 3}
     - target: {fileID: 1542370943973626388, guid: 8f6d1041f2e0dc64786ec9d1302f84b3, type: 3}
       propertyPath: director
       value: 
       objectReference: {fileID: 657610059}
+    - target: {fileID: 1542370943973626393, guid: 8f6d1041f2e0dc64786ec9d1302f84b3, type: 3}
+      propertyPath: m_SpriteState.m_HighlightedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 173869b8ea67a744292ede8d3c041d93, type: 3}
+    - target: {fileID: 1542370943973626393, guid: 8f6d1041f2e0dc64786ec9d1302f84b3, type: 3}
+      propertyPath: m_SpriteState.m_SelectedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 173869b8ea67a744292ede8d3c041d93, type: 3}
+    - target: {fileID: 1542370943973626394, guid: 8f6d1041f2e0dc64786ec9d1302f84b3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 551d713bc4cce6c498efbdac0237047a, type: 3}
     - target: {fileID: 1542370944636221744, guid: 8f6d1041f2e0dc64786ec9d1302f84b3, type: 3}
       propertyPath: director
       value: 

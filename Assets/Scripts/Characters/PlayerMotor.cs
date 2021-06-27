@@ -69,7 +69,7 @@ public class PlayerMotor : MonoBehaviour
     private float timeNextAttack = 0f;
     public int firstHitDamage;
 
-    private float emotionTimer = 20;
+    public float emotionTimer = 20;
     private float emotionBar = 20;
 
     private Vector3 startPosition;
@@ -153,6 +153,8 @@ public class PlayerMotor : MonoBehaviour
     }
 
     private bool transformable = true;
+    private bool loadingTransformation = false;
+
 
     private void UpdatePrinceActions()
     {
@@ -163,16 +165,22 @@ public class PlayerMotor : MonoBehaviour
             prince.IsMoving = Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0;
             prince.HasAlreadyTransmuted = Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.LeftShift);
 
-
-            if (emotionTimer > 2f)
+            if(!loadingTransformation && emotionTimer > 0)
             {
-                prince.IsHuman = !Input.GetKey(KeyCode.LeftShift);
                 prince.IsRaven = Input.GetKey(KeyCode.LeftShift);
+                prince.IsHuman = !prince.IsRaven;
             }
-            else
+
+            if (loadingTransformation || emotionTimer < 0)
             {
+                prince.IsRaven = false;
+                prince.IsHuman = true;
+                loadingTransformation = true;
+            }
 
-
+            if(loadingTransformation && emotionTimer > 2f)
+            {
+                loadingTransformation = false;
             }
 
 
@@ -194,27 +202,21 @@ public class PlayerMotor : MonoBehaviour
     private void UpdateStatusBars()
     {
 
-        float passoEmotion = -0.7f / emotionBar;
-        passoEmotion = passoEmotion * Time.deltaTime;
-
-        Vector3 energyScale = energyBar.transform.localScale;
-
         if (prince.IsRaven)
         {
-            emotionTimer -= Time.deltaTime;
-            
-            energyScale.x += passoEmotion;
-            energyBar.transform.localScale = energyScale;
+            emotionTimer -= Time.deltaTime * 2; // 10 segundos
 
-        }
-
-        if(emotionTimer < emotionBar && prince.IsHuman)
+        } else if (prince.IsHuman &&  emotionTimer < emotionBar)
         {
-            emotionTimer += Time.deltaTime;
-            energyScale.x -= passoEmotion * 0.75f;
-            energyBar.transform.localScale = energyScale;
+            emotionTimer += Time.deltaTime; // 20 segundos
         }
 
+        float limitBar = -0.7f;
+        float passoEmotion = limitBar - ((limitBar * emotionTimer) / emotionBar);
+
+        Vector3 energyScale = energyBar.transform.localScale;
+        energyScale.x = passoEmotion;
+        energyBar.transform.localScale = energyScale;
 
     }
 
@@ -235,7 +237,7 @@ public class PlayerMotor : MonoBehaviour
         
             if (prince.IsAttacking)
             {
-                if (!audios[AudioAttacking].isPlaying)
+                if (!audios[AudioAttacking].isPlaying && !prince.IsRaven)
                     audios[AudioAttacking].Play();
             }
 
@@ -313,6 +315,23 @@ public class PlayerMotor : MonoBehaviour
 
             }
 
+            foreach (GameObject element in obstacles)
+            {
+                if (element != null && element.GetComponent<SpriteRenderer>() != null)
+                {
+                    if (prince.IsRaven || prince.IsAttacking)
+                    {
+                        element.GetComponent<SpriteRenderer>().sortingOrder = prince.rend.sortingOrder - 1;
+                    }
+                    else
+                    {
+                        element.GetComponent<SpriteRenderer>().sortingOrder = prince.rend.sortingOrder;
+                    }
+
+                    element.GetComponent<Collider2D>().isTrigger = prince.IsRaven;
+                }
+            }
+
             foreach (GameObject element in enemies)
             {
                 if(element != null) 
@@ -328,9 +347,11 @@ public class PlayerMotor : MonoBehaviour
                 element.GetComponent<Collider2D>().isTrigger = prince.IsRaven;
                 }
             }
+
             DialogueHasAlreadyOver = false;
         }
     }
+
 
     void PlayerAttack()
     {
@@ -391,5 +412,6 @@ public class PlayerMotor : MonoBehaviour
             DialogueHasAlreadyOver = true;
         }
     }
+
 
 }

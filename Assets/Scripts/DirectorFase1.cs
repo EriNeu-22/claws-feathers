@@ -62,7 +62,7 @@ public class DirectorFase1 : MonoBehaviour
             mentor.SendMessage("FirstStrawmanIsDestroyed", true);
         }
 
-        if (Input.GetKeyDown(KeyCode.Return) && !playerMotor.prince.IsInteracting)
+        if (Input.GetKeyDown(KeyCode.Escape) && !playerMotor.prince.IsInteracting)
         {
             PauseAction = !PauseAction;
             player.SendMessage("PauseGame", PauseAction);

@@ -17,8 +17,10 @@ public class BackToMenu : MonoBehaviour
     public void QuitBackToMenu()
     {
 
-        var sceneLoaderMenu = Instantiate(SceneLoaderMenu, new Vector3(canvas.referenceResolution.x + canvas.referenceResolution.x / 5f, canvas.referenceResolution.y, 0), Quaternion.identity);
+        var sceneLoaderMenu = Instantiate(SceneLoaderMenu, new Vector3(canvas.referenceResolution.x / 2, canvas.referenceResolution.y / 2, 0), Quaternion.identity);
         sceneLoaderMenu.transform.SetParent(transform);
+
+
         PlayerPrefs.SetString("PreviousScene", SceneManager.GetActiveScene().name);
         StartCoroutine(DoFade("2_Menu"));
 

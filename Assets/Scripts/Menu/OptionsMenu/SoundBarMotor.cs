@@ -35,6 +35,8 @@ public class SoundBarMotor : MonoBehaviour
     private bool ChekIfMouseAlreadyOver = true;
     private bool MouseAlreadyOver = false;
 
+    private Vector3 ImagePos;
+
     private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -46,6 +48,8 @@ public class SoundBarMotor : MonoBehaviour
 
         rectTransform.transform.position = position;
         VolumeText.text = "" + VolumeSound;
+
+        ImagePos = VolumeOptionImage.transform.position;
 
     }
 
@@ -72,8 +76,13 @@ public class SoundBarMotor : MonoBehaviour
 
     }
 
+
+
     private void SelectOption()
     {
+
+        VolumeOptionImage.transform.position = ImagePos;
+
 
         VolumeOptionImage.sprite = images[OP_NOT_SELECTED];
 
@@ -82,6 +91,14 @@ public class SoundBarMotor : MonoBehaviour
 
         if (VolumeSound == 0)
         {
+            Vector3 MutePosition = VolumeOptionImage.transform.position;
+
+            MutePosition.x = MutePosition.x + 3.1f;
+            MutePosition.y = MutePosition.y - 2.8f;
+
+            VolumeOptionImage.transform.position = MutePosition;
+
+
             if (HoldVolumeOption)
             {
                 VolumeOptionImage.sprite = images[OP_MUTE_SELECTED];
@@ -90,6 +107,7 @@ public class SoundBarMotor : MonoBehaviour
             {
                 VolumeOptionImage.sprite = images[OP_MUTE_NOT_SELECTED];
             }
+
         }
 
     }
