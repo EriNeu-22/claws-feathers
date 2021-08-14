@@ -387,6 +387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73567506b4c195544997238904a6adc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameManager: {fileID: 7683325491585823923, guid: 371755b94d336044c88adf9a9d337acf, type: 3}
   Language: PORTUGUESE
   VolumeSound: 100
   OptionBox: {fileID: 639157787}

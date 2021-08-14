@@ -1103,6 +1103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42ba0d90ce1a1644a92cb196aed2df8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameManager: {fileID: 7683325491585823923, guid: 371755b94d336044c88adf9a9d337acf, type: 3}
   spearRight: {fileID: 1828957231}
   spearLeft: {fileID: 861033586}
   speedRotation: 200
@@ -1353,6 +1354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42ba0d90ce1a1644a92cb196aed2df8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameManager: {fileID: 7683325491585823923, guid: 371755b94d336044c88adf9a9d337acf, type: 3}
   spearRight: {fileID: 1353818508}
   spearLeft: {fileID: 980445248}
   speedRotation: 200
@@ -1912,6 +1914,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42ba0d90ce1a1644a92cb196aed2df8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameManager: {fileID: 7683325491585823923, guid: 371755b94d336044c88adf9a9d337acf, type: 3}
   spearRight: {fileID: 1251902300}
   spearLeft: {fileID: 684846796}
   speedRotation: 200

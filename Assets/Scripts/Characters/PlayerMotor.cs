@@ -77,12 +77,12 @@ public class PlayerMotor : MonoBehaviour
     private ArrayList enemies;
     public GameObject energyBar;
 
-    public AudioSource[] audios;
-    private const int AudioWalking = 0;
-    private const int AudioFlying = 1;
-    private const int AudioAttacking = 2;
     private bool GameIsPaused = false;
     private bool DialogueHasAlreadyOver = false;
+
+    public BoxCollider2D box;
+    public GameObject teste;
+    public GameObject teste2;
     #endregion
 
 
@@ -93,6 +93,8 @@ public class PlayerMotor : MonoBehaviour
 
     void Start()
     {
+        updateVolumeSounds();
+
         prince = new Prince()
         {
             IsInteracting = false,
@@ -127,8 +129,19 @@ public class PlayerMotor : MonoBehaviour
 
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag.Equals("river") && prince.IsAlive && prince.IsHuman)
+        {
+            prince.IsAlive = false;
+
+        }
+    }
+
+
     void Update()
     {
+  
         if (!prince.IsInteracting && !GameIsPaused)
         {
             UpdatePrinceActions();
@@ -146,15 +159,26 @@ public class PlayerMotor : MonoBehaviour
             }
             else
             {
-                //GameOver(); 
-            }
+                GameOver();
+        }
         
 
     }
 
+    private void GameOver()
+    {
+        prince.animator.SetBool("walk", false);
+        prince.animator.SetBool("walk", false);
+
+        audios[AudioWalking].Pause();
+        audios[AudioAttacking].Pause();
+
+    }
+
+
+
     private bool transformable = true;
     private bool loadingTransformation = false;
-
 
     private void UpdatePrinceActions()
     {
@@ -204,7 +228,7 @@ public class PlayerMotor : MonoBehaviour
 
         if (prince.IsRaven)
         {
-            emotionTimer -= Time.deltaTime * 2; // 10 segundos
+            emotionTimer -= Time.deltaTime * 4; // 10 segundos
 
         } else if (prince.IsHuman &&  emotionTimer < emotionBar)
         {
@@ -223,9 +247,9 @@ public class PlayerMotor : MonoBehaviour
     private void Transform()
     {
         
-        prince.animator.SetBool("raven", prince.IsRaven && !prince.IsHuman && !prince.IsInteracting);
-        prince.animator.SetBool("flying_high", prince.IsFlyingHigh && !prince.IsInteracting);
-        prince.animator.SetBool("flying_low", prince.IsFlyingDown && !prince.IsInteracting);
+        prince.animator.SetBool("raven", prince.IsRaven && !prince.IsHuman && !prince.IsInteracting && !GameIsPaused);
+        prince.animator.SetBool("flying_high", prince.IsFlyingHigh && !prince.IsInteracting && !GameIsPaused);
+        prince.animator.SetBool("flying_low", prince.IsFlyingDown && !prince.IsInteracting && !GameIsPaused);
 
         RunAudio(AudioFlying, prince.IsRaven && !prince.IsInteracting);
     }
@@ -233,7 +257,7 @@ public class PlayerMotor : MonoBehaviour
     private void Attack()
     {
 
-        prince.animator.SetBool("attack", prince.IsAttacking);
+        prince.animator.SetBool("attack", prince.IsAttacking && !GameIsPaused);
         
             if (prince.IsAttacking)
             {
@@ -268,7 +292,7 @@ public class PlayerMotor : MonoBehaviour
             Turn(_movX, _movY);
         }
 
-        prince.animator.SetBool("walk", prince.IsMoving && !prince.IsInteracting);
+        prince.animator.SetBool("walk", prince.IsMoving && !prince.IsInteracting && !GameIsPaused);
         RunAudio(AudioWalking, prince.IsHuman && prince.IsMoving && !prince.IsInteracting);
 
     }
@@ -356,7 +380,6 @@ public class PlayerMotor : MonoBehaviour
     void PlayerAttack()
     {
 
-
         Collider2D[] enemiesAttack = Physics2D.OverlapCircleAll(attackCheck.position, radiusAttack, layerEnemy);
 
         foreach (Collider2D enemy in enemiesAttack)
@@ -383,6 +406,7 @@ public class PlayerMotor : MonoBehaviour
 
     }
 
+    
 
     private void OnDrawGizmosSelected()
     {
@@ -392,7 +416,7 @@ public class PlayerMotor : MonoBehaviour
 
     private void RunAudio(int id, bool turnOn)
     {
-        if (turnOn)
+        if (turnOn && !GameIsPaused)
         {
             if(!audios[id].isPlaying)
                 audios[id].Play();
@@ -405,13 +429,36 @@ public class PlayerMotor : MonoBehaviour
 
     public void PauseGame(bool value)
     {
-        GameIsPaused = value;
 
+        GameIsPaused = value;
+        
         if (GameIsPaused)
         {
             DialogueHasAlreadyOver = true;
+
+        } else
+        {
+            updateVolumeSounds();
         }
+
     }
+
+    public AudioSource[] audios;
+    private const int AudioWalking = 0;
+    private const int AudioFlying = 1;
+    private const int AudioAttacking = 2;
+    private const float AudioWalkingVolumeMax = 0.149f;
+    private const float AudioFlyingVolumeMax = 1;
+    private const float AudioAttackingVolumeMax = 1;
+
+    private void updateVolumeSounds()
+    {
+        audios[AudioWalking].volume = AudioWalkingVolumeMax * GameManager.AudioVolumePerc / 100;
+        audios[AudioFlying].volume = AudioFlyingVolumeMax * GameManager.AudioVolumePerc / 100;
+        audios[AudioAttacking].volume = AudioAttackingVolumeMax * GameManager.AudioVolumePerc / 100;
+
+    }
+
 
 
 }

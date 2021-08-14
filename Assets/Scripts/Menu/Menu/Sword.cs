@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 
 public class Sword : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-
+    public GameManager GameManager;
     public GameObject spearRight;
     public GameObject spearLeft;
 
@@ -24,14 +24,13 @@ public class Sword : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private bool Continue = true;
 
-
-
     public AudioClip AudioClipSelected;
     private AudioSource AudioSelected;
+    private float AudioSelectedVolume = 0.01f;
 
     public AudioClip AudioClipPressed;
     private AudioSource AudioPressed;
-    
+    private float AudioPressedVolume = 0.06f;
 
     void Start()
     {
@@ -40,11 +39,11 @@ public class Sword : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         AudioSelected = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
         AudioSelected.clip = AudioClipSelected;
-        AudioSelected.volume = 0.01f;
+        AudioSelected.volume = AudioSelectedVolume * GameManager.AudioVolumePerc / 100;
 
         AudioPressed = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
         AudioPressed.clip = AudioClipPressed;
-        AudioPressed.volume = 0.06f;
+        AudioPressed.volume = AudioPressedVolume * GameManager.AudioVolumePerc / 100;
 
     }
 

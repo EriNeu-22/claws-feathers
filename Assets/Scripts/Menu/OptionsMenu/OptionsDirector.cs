@@ -6,11 +6,13 @@ using UnityEngine.SceneManagement;
 public class OptionsDirector : MonoBehaviour
 {
 
+    public GameManager GameManager;
+
     public string Language;
     public int VolumeSound;
 
     public GameObject OptionBox;
-    
+
     private string Action;
     private bool actionTrigger;
 
@@ -22,7 +24,6 @@ public class OptionsDirector : MonoBehaviour
     public string MenuType;
 
     private bool PauseActive = false;
-
 
     void Start()
     {
@@ -37,6 +38,8 @@ public class OptionsDirector : MonoBehaviour
 
     void Update()
     {
+        GameManager.AudioVolumePerc = VolumeSound;
+
         if (MenuType.Equals("MenuOptions"))
         {
             DoMenuOptions();

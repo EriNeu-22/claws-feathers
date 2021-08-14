@@ -14,8 +14,10 @@ public class GameManager : MonoBehaviour
 
     private const float AudioSelectedVolume = 0.01f;
     private const float AudioPressedVolume = 0.06f;
-    private const float AudioMenuThemeVolume = 0.8f;
+    private const float AudioMenuThemeVolumeMax = 0.8f;
+    private float AudioMenuThemeVolume = 0.8f;
 
+    public static float AudioVolumePerc = 100;
 
     private void Awake()
     {
@@ -44,11 +46,22 @@ public class GameManager : MonoBehaviour
             AlreadyStartSong = true;
         }
 
-        if (AlreadyStartSong && TimerCounterToFadeMenuSong < 10f)
+        if (AlreadyStartSong)
         {
-            _AudioMenuTheme.volume = Mathf.Lerp(0, AudioMenuThemeVolume, TimerCounterToFadeMenuSong / 10f);
-            TimerCounterToFadeMenuSong += Time.deltaTime;
+            if (TimerCounterToFadeMenuSong < 10f)
+            {
+                _AudioMenuTheme.volume = Mathf.Lerp(0, AudioMenuThemeVolume, TimerCounterToFadeMenuSong / 10f);
+                TimerCounterToFadeMenuSong += Time.deltaTime;
+            }
+            else
+            {
+                AudioMenuThemeVolume = AudioMenuThemeVolumeMax * AudioVolumePerc / 100;
+                _AudioMenuTheme.volume = AudioMenuThemeVolume;
+            }
         }
+
+
+
     }
 
     public void StopMenuSong(bool stop)
