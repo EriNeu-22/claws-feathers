@@ -32,7 +32,6 @@ public class DialogueControl : MonoBehaviour
         if (IsInteracting && Input.GetKeyDown(KeyCode.Return))
         {
             NextSentence();
-
         }
 
     }
@@ -41,7 +40,7 @@ public class DialogueControl : MonoBehaviour
     {
         IsInteracting = true;
         player.SendMessage("PlayerIsTalking", IsInteracting);
-
+        
         dialogueObj.SetActive(true);
         sentences = txt;
         splashes = splashesArts;
@@ -88,6 +87,7 @@ public class DialogueControl : MonoBehaviour
         }
 
     }
+
     public void SkipDialogue()
     {
         speechText.text = "";
@@ -119,6 +119,7 @@ public class DialogueControl : MonoBehaviour
         }
 
     }
+
     public IEnumerator DoFade(CanvasGroup canvasGroup, float start, float end)
     {
         float counter = 0f;

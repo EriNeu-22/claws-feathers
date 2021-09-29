@@ -156,7 +156,7 @@ public class DirectorFase1 : MonoBehaviour
     public AudioSource[] audios;
     private const float AudioTrainingFieldMax = 0.12f;
     private const float AudioForestEnviromentVolumMax = 0.86f;
-    private const float AudioRiverVolumMax = 0.86f;
+    private const float AudioRiverVolumMax = 0.15f;
     private const int AudioTrainingField = 0;
     private const int AudioForestEnviromentVolum = 1;
     private const int AudioRiverVolum = 2;

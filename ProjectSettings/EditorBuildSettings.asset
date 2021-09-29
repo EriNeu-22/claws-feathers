@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 1
+    path: Assets/Scenes/9_AtHome.unity
+    guid: 2db9897071841ed449119a2cf573a1c3
+  - enabled: 1
     path: Assets/Scenes/1_Introduction.unity
     guid: bc29226c4e19c1342863780339a8d723
   - enabled: 1
@@ -20,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/3_Options.unity
     guid: c3b1af6fe1ddf6743955196d8168cee7
+  - enabled: 1
+    path: Assets/Scenes/4_HowToPlay.unity
+    guid: 2babb6ddafb5fe74dbd6192f66b8455b
   m_configObjects: {}

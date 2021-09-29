@@ -6,7 +6,6 @@ public class MentorMotor : MonoBehaviour
 {
 
     [Header("Components")]
-    public GameObject firstStrawman;
     public GameObject score;
     public GameObject [] interactions;
     private int index = 0;

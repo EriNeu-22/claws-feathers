@@ -27,6 +27,8 @@ public class OptionsDirector : MonoBehaviour
 
     void Start()
     {
+        VolumeSound = (int) GameManager.AudioVolumePerc;
+
         if (MenuType.Equals("MenuOptions"))
         {
             canvasgroup = OptionBox.GetComponent<CanvasGroup>();

@@ -55,12 +55,14 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Hud\AtHome\DialogueAtHome.cs" />
     <Compile Include="Assets\Scripts\Menu\Menu\Sword.cs" />
     <Compile Include="Assets\Scripts\Menu\OptionsMenu\SoundBarMotor.cs" />
     <Compile Include="Assets\Scripts\Characters\CutHitMotor.cs" />
     <Compile Include="Assets\Scripts\Menu\Pause\PauseDirector.cs" />
     <Compile Include="Assets\Scripts\Hud\DialogueControl.cs" />
     <Compile Include="Assets\Scripts\Characters\PlayerInteraction.cs" />
+    <Compile Include="Assets\Scripts\Menu\HowToPlay\BackToOption.cs" />
     <Compile Include="Assets\Scripts\Characters\MentorMotor.cs" />
     <Compile Include="Assets\Scripts\Characters\StrawmanMotor.cs" />
     <Compile Include="Assets\Scripts\Spear\SpearCutMotor.cs" />
@@ -69,16 +71,21 @@
     <Compile Include="Assets\Scripts\Menu\LevelLoader.cs" />
     <Compile Include="Assets\Scripts\Characters\PlayerMotor.cs" />
     <Compile Include="Assets\Scripts\Hud\CameraFollow.cs" />
+    <Compile Include="Assets\Scripts\Menu\HowToPlay\HowToPlayDirector.cs" />
     <Compile Include="Assets\Scripts\Menu\OptionsMenu\IdiomSelector.cs" />
     <Compile Include="Assets\Scripts\Hud\TitleDirector.cs" />
+    <Compile Include="Assets\Scripts\Characters\PlayerAtHome.cs" />
     <Compile Include="Assets\Scripts\DirectorFase1.cs" />
     <Compile Include="Assets\Scripts\Hud\Dialogue.cs" />
     <Compile Include="Assets\Scripts\OpenningDirector.cs" />
+    <Compile Include="Assets\Scripts\DirectorFase2_1.cs" />
     <Compile Include="Assets\Scripts\Menu\Pause\BackToMenu.cs" />
     <Compile Include="Assets\Scripts\Menu\OptionsMenu\OptionsItemMotor.cs" />
+    <Compile Include="Assets\Scripts\Hud\AtHome\DialogueControlAtHome.cs" />
     <Compile Include="Assets\Scripts\Menu\Menu\MenuDirector.cs" />
     <Compile Include="Assets\Director.cs" />
     <Compile Include="Assets\Scripts\Hud\StatusBar.cs" />
+    <Compile Include="Assets\Teste.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

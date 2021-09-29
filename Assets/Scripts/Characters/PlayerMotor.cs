@@ -80,9 +80,7 @@ public class PlayerMotor : MonoBehaviour
     private bool GameIsPaused = false;
     private bool DialogueHasAlreadyOver = false;
 
-    public BoxCollider2D box;
-    public GameObject teste;
-    public GameObject teste2;
+    public EdgeCollider2D riverCollider;
     #endregion
 
 
@@ -90,6 +88,8 @@ public class PlayerMotor : MonoBehaviour
     private const string ENEMY_TAG = "enemy";
     private const string HUMAN_NOT_PASS = "human_not_pass";
     #endregion
+
+    public GameObject strawman;
 
     void Start()
     {
@@ -116,7 +116,7 @@ public class PlayerMotor : MonoBehaviour
 
         startPosition = new Vector3(0, 0, 0);
         transform.position = startPosition;
-        
+
         obstacles = GameObject.FindGameObjectsWithTag(HUMAN_NOT_PASS);
 
         GameObject[] enemiesVector = GameObject.FindGameObjectsWithTag(ENEMY_TAG);
@@ -134,14 +134,14 @@ public class PlayerMotor : MonoBehaviour
         if (collision.gameObject.tag.Equals("river") && prince.IsAlive && prince.IsHuman)
         {
             prince.IsAlive = false;
-
         }
     }
 
-
     void Update()
     {
-  
+
+
+
         if (!prince.IsInteracting && !GameIsPaused)
         {
             UpdatePrinceActions();
@@ -175,8 +175,6 @@ public class PlayerMotor : MonoBehaviour
 
     }
 
-
-
     private bool transformable = true;
     private bool loadingTransformation = false;
 
@@ -206,7 +204,6 @@ public class PlayerMotor : MonoBehaviour
             {
                 loadingTransformation = false;
             }
-
 
             prince.IsAttacking = false;
             if (timeNextAttack <= 0 && Input.GetKeyDown(KeyCode.Z))
@@ -331,6 +328,8 @@ public class PlayerMotor : MonoBehaviour
 
     private void UpdatePrinceCollisions()
     {
+        riverCollider.enabled = prince.IsHuman;
+
         if (prince.HasAlreadyTransmuted || DialogueHasAlreadyOver)
         {
             foreach (GameObject element in obstacles)
@@ -376,7 +375,6 @@ public class PlayerMotor : MonoBehaviour
         }
     }
 
-
     void PlayerAttack()
     {
 
@@ -406,12 +404,10 @@ public class PlayerMotor : MonoBehaviour
 
     }
 
-    
-
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(attackCheck.position, radiusAttack);
+        //Gizmos.DrawWireSphere(attackCheck.position, radiusAttack);
     }
 
     private void RunAudio(int id, bool turnOn)
